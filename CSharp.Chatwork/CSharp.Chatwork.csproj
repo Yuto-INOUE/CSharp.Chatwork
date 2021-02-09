@@ -8,7 +8,7 @@
     <Description>Chatwork API library for .NET</Description>
     <Copyright>Copyright (c) Yuto Inoue</Copyright>
     <PackageLicenseFile>LICENCE</PackageLicenseFile>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Yuto-INOUE/CSharp.Chatwork/tree/master</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Yuto-INOUE/CSharp.Chatwork</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
