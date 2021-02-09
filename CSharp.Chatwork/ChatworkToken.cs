@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using CSharp.Chatwork.Endpoint;
+﻿using CSharp.Chatwork.Endpoint;
 
 namespace CSharp.Chatwork
 {

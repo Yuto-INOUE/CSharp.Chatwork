@@ -1,4 +1,7 @@
-﻿namespace CSharp.Chatwork.Endpoint
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace CSharp.Chatwork.Endpoint
 {
 	public class Me : Endpoint
 	{
@@ -6,5 +9,16 @@
 			: base(token)
 		{
 		}
+
+		/// <summary>
+		/// 自分自身の情報を取得
+		/// </summary>
+		/// <returns>自分自身の情報</returns>
+		public async Task<AccountModel> GetAsync()
+		{
+			return await GetHttpResponseAsync<AccountModel>(HttpMethod.Get);
+		}
+
+		protected override string EndPoint => "me";
 	}
 }

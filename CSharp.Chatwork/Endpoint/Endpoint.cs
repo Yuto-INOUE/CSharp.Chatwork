@@ -19,12 +19,12 @@ namespace CSharp.Chatwork.Endpoint
 			this.Token = token;
 		}
 
-		internal async Task SendRequestAsync(HttpMethod method, ApiParameter param = null)
+		internal async Task SendHttpRequestAsync(HttpMethod method, ApiParameter param = null)
 		{
 			await ExecAsync(method, param);
 		}
 
-		internal async Task<T> GetResponseAsync<T>(HttpMethod method, ApiParameter param = null)
+		internal async Task<T> GetHttpResponseAsync<T>(HttpMethod method, ApiParameter param = null)
 		{
 			return JsonConvert.DeserializeObject<T>(await ExecAsync(method, param));
 		}
@@ -81,6 +81,6 @@ namespace CSharp.Chatwork.Endpoint
 		}
 
 		private ChatworkToken Token { get; set; }
-		private string EndPoint => throw new NotSupportedException();
+		protected virtual string EndPoint => throw new NotSupportedException();
 	}
 }
