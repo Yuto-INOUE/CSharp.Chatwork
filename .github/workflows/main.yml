@@ -1,0 +1,31 @@
+name: Publish nuget Package
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Nuget
+        uses: NuGet/setup-nuget@v1.0.2
+        with:
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-version: latest 
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.101
+
+      - name: Build
+        run: dotnet build ./CSharp.Chatwork/CSharp.Chatwork.csproj -c Release
+        
+      - name: Push for nuget
+        run: dotnet nuget push ./CSharp.Chatwork/bin/Release/CSharp.Chatwork.*.nupkg -k $NUGAET_API_KEY -s https://api.nuget.org/v3/index.json
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }} 
