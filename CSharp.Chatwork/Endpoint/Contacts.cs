@@ -1,4 +1,7 @@
-﻿namespace CSharp.Chatwork.Endpoint
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace CSharp.Chatwork.Endpoint
 {
 	public class Contacts : Endpoint
 	{
@@ -6,5 +9,12 @@
 			: base(token)
 		{
 		}
+
+		public async Task<ListedResponse<AccountModel>> GetAsync()
+		{
+			return await GetHttpResponseAsync<ListedResponse<AccountModel>>(HttpMethod.Get);
+		}
+
+		protected override string EndPoint => "incoming_requests";
 	}
 }
