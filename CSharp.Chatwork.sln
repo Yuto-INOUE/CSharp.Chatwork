@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Chatwork", "CSharp.Chatwork.csproj", "{22E7FD89-301F-443B-B35A-F3B456C392B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Chatwork", ".\CSharp.Chatwork\CSharp.Chatwork.csproj", "{22E7FD89-301F-443B-B35A-F3B456C392B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Chatwork.ConsoleTest", "..\CSharp.Chatwork.ConsoleTest\CSharp.Chatwork.ConsoleTest.csproj", "{F34C2C36-FE00-4ED8-B770-4B38AFA88BAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Chatwork.ConsoleTest", ".\CSharp.Chatwork.ConsoleTest\CSharp.Chatwork.ConsoleTest.csproj", "{F34C2C36-FE00-4ED8-B770-4B38AFA88BAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
