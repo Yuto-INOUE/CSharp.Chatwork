@@ -16,11 +16,11 @@ jobs:
         with:
           source-url: https://api.nuget.org/v3/index.json
           dotnet-version: 3.1.101
+        env:
+          NUGET_AUTH_TOKEN : ${{ secrets.NUGET_API_KEY }} 
 
       - name: Build
         run: dotnet build ./CSharp.Chatwork/CSharp.Chatwork.csproj -c Release
         
       - name: Push for nuget
-        run: dotnet nuget push ./CSharp.Chatwork/bin/Release/CSharp.Chatwork.*.nupkg --api-key $NUGET_API_KEY
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }} 
+        run: dotnet nuget push ./CSharp.Chatwork/bin/Release/CSharp.Chatwork.*.nupkg
