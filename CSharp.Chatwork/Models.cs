@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using CSharp.Chatwork.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -194,6 +195,17 @@ namespace CSharp.Chatwork
 
 		[JsonProperty("mytask_num")]
 		public int MyTaskNum { get; set; }
+	}
+
+	internal class ApiErrorModel : Response
+	{
+		public static explicit operator string[](ApiErrorModel model)
+		{
+			return model.Errors;
+		}
+
+		[JsonProperty("errors")]
+		public string[] Errors { get; set; }
 	}
 
 	public enum TaskStatus

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using CSharp.Chatwork.Internal;
@@ -52,15 +53,22 @@ namespace CSharp.Chatwork.Endpoint
 				message.Content = new StringContent(param?.ToQuery() ?? string.Empty, Encoding.UTF8);
 			}
 
-			var response = await _httpClient.SendAsync(message);
-			var responseContent = await response.Content.ReadAsStringAsync();
-			if (!response.StatusCode.IsSuccessStatusCode())
+			try
 			{
-				var errors = (JArray)JsonConvert.DeserializeObject<JToken>(responseContent)["errors"];
-				throw new ChatworkException(errors.Cast<string>().ToArray(), (int)response.StatusCode);
-			}
+				var response = await _httpClient.SendAsync(message);
+				var responseContent = await response.Content.ReadAsStringAsync();
+				if (!response.StatusCode.IsSuccessStatusCode())
+				{
+					var errors = JsonConvert.DeserializeObject<ApiErrorModel>(responseContent);
+					throw new ChatworkException((string[])errors, (int)response.StatusCode);
+				}
 
-			return responseContent;
+				return responseContent;
+			}
+			catch (Exception ex)
+			{
+				throw new ChatworkException(ex);
+			}
 		}
 
 		private bool ShouldAppendQueryString(HttpMethod method)
