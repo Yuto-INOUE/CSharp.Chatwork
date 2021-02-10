@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using CSharp.Chatwork.Internal;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace CSharp.Chatwork.Endpoint
 {
@@ -67,7 +64,12 @@ namespace CSharp.Chatwork.Endpoint
 			}
 			catch (Exception ex)
 			{
-				throw new ChatworkException(ex);
+				if (!(ex is ChatworkException))
+				{
+					throw new ChatworkException(ex);
+				}
+
+				throw;
 			}
 		}
 

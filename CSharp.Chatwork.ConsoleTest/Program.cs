@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using System.Text;
+using Microsoft.CodeAnalysis.CSharp.Scripting.Hosting;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
+
+// ReSharper disable LocalizableElement
 
 namespace CSharp.Chatwork.ConsoleTest
 {
@@ -9,47 +12,53 @@ namespace CSharp.Chatwork.ConsoleTest
 	{
 		public static void Main(string[] args)
 		{
-			Console.Write("APIキー：");
+			Console.Write("Please enter your chatwork api key: ");
 			var key = Console.ReadLine();
 			if (key == null) return;
 
 			var token = ChatworkToken.Create(key);
 
-			Console.WriteLine($"あなたの情報");
-			Console.WriteLine(Dump(token.Me.GetAsync().Result));
+			try
+			{
+				Console.WriteLine($"Your account information");
+				Console.WriteLine(Dump(token.Me.GetAsync().Result));
 
-			Console.WriteLine($"あなたのステータス");
-			Console.WriteLine(Dump(token.My.Status.GetAsync().Result));
+				Console.WriteLine($"Your status");
+				Console.WriteLine(Dump(token.My.Status.GetAsync().Result));
 
-			Console.WriteLine($"あなたのタスク");
-			Console.WriteLine(Dump(token.My.Task.GetAsync().Result));
+				Console.WriteLine($"Your tasks");
+				Console.WriteLine(Dump(token.My.Task.GetAsync().Result));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
 
 			Console.ReadLine();
 		}
 
 		private static string Dump(object obj)
 		{
+			string F(object o) => CSharpObjectFormatter.Instance.FormatObject(
+				o,
+				new PrintOptions
+				{
+					MemberDisplayFormat = MemberDisplayFormat.SeparateLines,
+					MaximumOutputLength = int.MaxValue
+				});
+
 			if (obj is IEnumerable)
 			{
 				var sb = new StringBuilder();
-				foreach (var obj2 in (IEnumerable)obj)
+				foreach (var obj2 in (IEnumerable) obj)
 				{
-					sb.Append("--------------------");
-					sb.Append(
-						string.Join(
-							Environment.NewLine,
-							obj2
-								.GetType()
-								.GetProperties()
-								.Select(prop => $"{prop.Name.PadLeft(20)} : {prop.GetValue(obj)}")));
+					sb.AppendLine("-----------------------------------").AppendLine(F(obj2));
 				}
 
 				return sb.ToString();
 			}
 
-			return string.Join(
-				Environment.NewLine,
-				obj.GetType().GetProperties().Select(prop => $"{prop.Name.PadLeft(20)} : {prop.GetValue(obj)}"));
+			return F(obj);
 		}
 	}
 }

@@ -16,8 +16,13 @@ namespace CSharp.Chatwork
 	{
 	}
 
-	public class ListedResponse<T> : IResponse, IReadOnlyList<T>
+	public class ListedResponse<T> : IResponse, ICollection<T>
 	{
+		public ListedResponse()
+		{
+			this.InnerList = new List<T>();
+		}
+
 		public ListedResponse(List<T> collection)
 		{
 			this.InnerList = collection;
@@ -33,9 +38,35 @@ namespace CSharp.Chatwork
 			return GetEnumerator();
 		}
 
+		public void Add(T item)
+		{
+			this.InnerList.Add(item);
+		}
+
+		public void Clear()
+		{
+			this.InnerList.Clear();
+		}
+
+		public bool Contains(T item)
+		{
+			return this.InnerList.Contains(item);
+		}
+
+		public void CopyTo(T[] array, int arrayIndex)
+		{
+			this.InnerList.CopyTo(array, arrayIndex);
+		}
+
+		public bool Remove(T item)
+		{
+			return this.InnerList.Remove(item);
+		}
+
+		public int Count => this.InnerList.Count;
+		public bool IsReadOnly => false;
+
 		private List<T> InnerList { get; set; }
-		public int Count { get; }
-		public T this[int index] => this.InnerList[index];
 	}
 
 	public class AccountModel : Response
@@ -157,17 +188,17 @@ namespace CSharp.Chatwork
 		[JsonProperty("assigned_by_account")]
 		public AccountModel AssignedByAccount { get; set; }
 
-		[JsonProperty("task_id")]
+		[JsonProperty("message_id")]
 		public long MessageId { get; set; }
 
 		[JsonProperty("body")]
 		public string Body { get; set; }
 
-		[JsonProperty("task_id")]
+		[JsonProperty("limit_time")]
 		[JsonConverter(typeof(DateTimeConverter))]
 		public DateTime LimitTime { get; set; }
 
-		[JsonProperty("task_id")]
+		[JsonProperty("status")]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public TaskStatus Status { get; set; }
 

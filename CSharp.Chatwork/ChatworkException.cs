@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CSharp.Chatwork.Internal;
 using CSharp.Chatwork.Properties;
 
@@ -23,7 +24,7 @@ namespace CSharp.Chatwork
 		}
 
 		public ChatworkException(string[] errors, int statusCode)
-			: base(Resources.ExceptionBasic)
+			: base(Resources.ExceptionApiError)
 		{
 			this.ApiErrors = errors;
 			this.HttpStatusCode = statusCode;
@@ -31,7 +32,9 @@ namespace CSharp.Chatwork
 
 		public override string ToString()
 		{
-			return this.ApiErrors.JoinToString(Environment.NewLine);
+			return !this.ApiErrors.Any()
+				? base.ToString()
+				: this.ApiErrors.JoinToString(Environment.NewLine);
 		}
 
 		public string[] ApiErrors { get; set; }
