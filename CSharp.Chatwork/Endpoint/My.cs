@@ -6,8 +6,7 @@ namespace CSharp.Chatwork.Endpoint
 {
 	public class My : Endpoint
 	{
-		public My(ChatworkToken token)
-			: base(token)
+		public My(ChatworkToken token) : base(token)
 		{
 		}
 
@@ -17,8 +16,7 @@ namespace CSharp.Chatwork.Endpoint
 
 	public class MyStatus : Endpoint
 	{
-		public MyStatus(ChatworkToken token)
-			: base(token)
+		public MyStatus(ChatworkToken token) : base(token)
 		{
 		}
 
@@ -32,21 +30,18 @@ namespace CSharp.Chatwork.Endpoint
 
 	public class MyTasks : Endpoint
 	{
-		public MyTasks(ChatworkToken token)
-			: base(token)
+		public MyTasks(ChatworkToken token) : base(token)
 		{
 		}
 
-		public async Task<ListedResponse<TaskModel>> GetAsync(
-			int? assignedByAccountId = null,
-			TaskStatus? status = null)
+		public async Task<ListedResponse<TaskModel>> GetAsync(int? assignedByAccountId = null, TaskStatus? status = null)
 		{
 			return await GetHttpResponseAsync<ListedResponse<TaskModel>>(
 				HttpMethod.Get,
 				new ApiParameter
 				{
 					{ nameof(assignedByAccountId), assignedByAccountId },
-					{ nameof(status), status },
+					{ nameof(status), status }
 				});
 		}
 

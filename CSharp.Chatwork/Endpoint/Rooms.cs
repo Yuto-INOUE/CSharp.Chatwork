@@ -2,8 +2,7 @@
 {
 	public class Rooms : Endpoint
 	{
-		public Rooms(ChatworkToken token)
-			: base(token)
+		public Rooms(ChatworkToken token) : base(token)
 		{
 		}
 
@@ -13,8 +12,7 @@
 
 	public class RoomsWithRoomId : Endpoint
 	{
-		public RoomsWithRoomId(ChatworkToken token, string roomId)
-			: base(token)
+		public RoomsWithRoomId(ChatworkToken token, string roomId) : base(token)
 		{
 			this.RoomId = roomId;
 		}
@@ -24,7 +22,7 @@
 		public Tasks Tasks => new Tasks(this.Token, this.RoomId);
 		public Files Files => new Files(this.Token, this.RoomId);
 
-		private string RoomId { get; set; }
+		private string RoomId { get; }
 		protected override string EndPoint => $"rooms/{this.RoomId}";
 	}
 }

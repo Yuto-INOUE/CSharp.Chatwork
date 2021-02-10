@@ -1,13 +1,11 @@
 ﻿using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace CSharp.Chatwork.Endpoint
 {
 	public class IncomingRequests : Endpoint
 	{
-		public IncomingRequests(ChatworkToken token)
-			: base(token)
+		public IncomingRequests(ChatworkToken token) : base(token)
 		{
 		}
 
@@ -22,8 +20,7 @@ namespace CSharp.Chatwork.Endpoint
 
 	public class IncomingRequestsWithRequestId : Endpoint
 	{
-		public IncomingRequestsWithRequestId(ChatworkToken token, string requestId)
-			: base(token)
+		public IncomingRequestsWithRequestId(ChatworkToken token, string requestId) : base(token)
 		{
 			this.RequestId = requestId;
 		}
@@ -38,7 +35,7 @@ namespace CSharp.Chatwork.Endpoint
 			await SendHttpRequestAsync(HttpMethod.Put);
 		}
 
-		private string RequestId { get; set; }
+		private string RequestId { get; }
 		protected override string EndPoint => $"incoming_requests/{this.RequestId}";
 	}
 }

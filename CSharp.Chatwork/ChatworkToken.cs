@@ -8,33 +8,33 @@ namespace CSharp.Chatwork
 		{
 			return new ChatworkToken
 			{
-				ApiKey = apiKey,
+				ApiKey = apiKey
 			};
 		}
 
 		/// <summary>
-		/// 自分自身の情報にアクセスできます。
+		///     自分自身の情報にアクセスできます。
 		/// </summary>
 		public Me Me => new Me(this);
 
 		/// <summary>
-		/// 自分が持つデータへアクセスできます。
+		///     自分が持つデータへアクセスできます。
 		/// </summary>
 		public My My => new My(this);
 
 		/// <summary>
-		/// 自分のコンタクトになっているユーザーの一覧にアクセスできます。
+		///     自分のコンタクトになっているユーザーの一覧にアクセスできます。
 		/// </summary>
 		public Contacts Contacts => new Contacts(this);
 
 		/// <summary>
-		/// グループチャット、ダイレクトチャット、マイチャットなどのチャット全体をあらわすエンドポイントです。
-		/// チャットにひもづくメッセージ、タスク、ファイル、概要、メンバー情報などにアクセスできます。
+		///     グループチャット、ダイレクトチャット、マイチャットなどのチャット全体をあらわすエンドポイントです。
+		///     チャットにひもづくメッセージ、タスク、ファイル、概要、メンバー情報などにアクセスできます。
 		/// </summary>
 		public Rooms Rooms => new Rooms(this);
 
 		/// <summary>
-		/// 自分に対するコンタクト承認依頼データにアクセスできます。
+		///     自分に対するコンタクト承認依頼データにアクセスできます。
 		/// </summary>
 		public IncomingRequests IncomingRequests => new IncomingRequests(this);
 

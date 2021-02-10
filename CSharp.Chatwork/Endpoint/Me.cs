@@ -5,13 +5,12 @@ namespace CSharp.Chatwork.Endpoint
 {
 	public class Me : Endpoint
 	{
-		public Me(ChatworkToken token)
-			: base(token)
+		public Me(ChatworkToken token) : base(token)
 		{
 		}
 
 		/// <summary>
-		/// 自分自身の情報を取得
+		///     自分自身の情報を取得
 		/// </summary>
 		/// <returns>自分自身の情報</returns>
 		public async Task<AccountModel> GetAsync()

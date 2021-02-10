@@ -18,7 +18,7 @@ namespace CSharp.Chatwork.Internal
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			if ((value is DateTime) == false) throw new InvalidOperationException();
+			if (value is DateTime == false) throw new InvalidOperationException();
 
 			writer.WriteValue(((DateTime)value).Second);
 		}

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using CSharp.Chatwork.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -66,7 +65,7 @@ namespace CSharp.Chatwork
 		public int Count => this.InnerList.Count;
 		public bool IsReadOnly => false;
 
-		private List<T> InnerList { get; set; }
+		private List<T> InnerList { get; }
 	}
 
 	public class AccountModel : Response
@@ -242,26 +241,26 @@ namespace CSharp.Chatwork
 	public enum TaskStatus
 	{
 		Open,
-		Done,
+		Done
 	}
 
 	public enum TaskLimitType
 	{
 		Date,
-		Time,
+		Time
 	}
 
 	public enum RoomType
 	{
 		My,
 		Direct,
-		Group,
+		Group
 	}
 
 	public enum RoomRole
 	{
 		ReadOnly = 0,
 		Member = 1,
-		Admin = 2,
+		Admin = 2
 	}
 }

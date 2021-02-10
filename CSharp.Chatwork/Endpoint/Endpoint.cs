@@ -9,8 +9,8 @@ namespace CSharp.Chatwork.Endpoint
 {
 	public abstract class Endpoint
 	{
-		private static readonly HttpClient _httpClient = new HttpClient();
 		private const string BASE_URI = "https://api.chatwork.com/v2/";
+		private static readonly HttpClient _httpClient = new HttpClient();
 
 		protected Endpoint(ChatworkToken token)
 		{
@@ -39,16 +39,10 @@ namespace CSharp.Chatwork.Endpoint
 			};
 
 			var url = BASE_URI + this.EndPoint;
-			if (ShouldAppendQueryString(method) && param != null)
-			{
-				url += $"?{param.ToQuery()}";
-			}
+			if (ShouldAppendQueryString(method) && param != null) url += $"?{param.ToQuery()}";
 			message.RequestUri = new Uri(url);
 
-			if (ShouldSendContent(method))
-			{
-				message.Content = new StringContent(param?.ToQuery() ?? string.Empty, Encoding.UTF8);
-			}
+			if (ShouldSendContent(method)) message.Content = new StringContent(param?.ToQuery() ?? string.Empty, Encoding.UTF8);
 
 			try
 			{
@@ -64,10 +58,7 @@ namespace CSharp.Chatwork.Endpoint
 			}
 			catch (Exception ex)
 			{
-				if (!(ex is ChatworkException))
-				{
-					throw new ChatworkException(ex);
-				}
+				if (!(ex is ChatworkException)) throw new ChatworkException(ex);
 
 				throw;
 			}
