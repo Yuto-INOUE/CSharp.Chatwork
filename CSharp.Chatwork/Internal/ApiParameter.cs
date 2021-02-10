@@ -10,7 +10,9 @@ namespace CSharp.Chatwork.Internal
 	{
 		public string ToQuery()
 		{
-			return this.Select(kvp => $"{kvp.Key.ToLowerSnakeCase()}={UrlEncode(ConvertValue(kvp.Value))}").JoinToString("&");
+			return this
+					.Where(kvp => !string.IsNullOrEmpty(ConvertValue(kvp.Value)))
+					.Select(kvp => $"{kvp.Key.ToLowerSnakeCase()}={UrlEncode(ConvertValue(kvp.Value))}").JoinToString("&");
 		}
 
 		public void Add(string key, object obj)

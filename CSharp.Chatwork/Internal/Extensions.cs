@@ -26,7 +26,7 @@ namespace CSharp.Chatwork.Internal
 			{
 				if ('A' <= c && c <= 'Z' && sb.Length > 0)
 				{
-					sb.Append(c.ToString().ToLowerInvariant()).Append("_");
+					sb.Append("_").Append(c.ToString().ToLowerInvariant());
 				}
 				else
 				{

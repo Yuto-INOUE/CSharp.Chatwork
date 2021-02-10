@@ -80,7 +80,7 @@ namespace CSharp.Chatwork.Endpoint
 			return !ShouldAppendQueryString(method);
 		}
 
-		private ChatworkToken Token { get; set; }
+		internal ChatworkToken Token { get; set; }
 		protected virtual string EndPoint => throw new NotSupportedException();
 	}
 }
