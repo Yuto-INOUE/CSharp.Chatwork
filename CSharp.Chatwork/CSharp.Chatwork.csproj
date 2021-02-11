@@ -11,6 +11,8 @@
     <PackageProjectUrl>https://github.com/Yuto-INOUE/CSharp.Chatwork/tree/master</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Yuto-INOUE/CSharp.Chatwork</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>0.0.0.2</AssemblyVersion>
+    <FileVersion>0.0.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
