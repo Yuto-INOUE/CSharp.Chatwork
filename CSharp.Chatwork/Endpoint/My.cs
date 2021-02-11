@@ -34,7 +34,9 @@ namespace CSharp.Chatwork.Endpoint
 		{
 		}
 
-		public async Task<ListedResponse<TaskModel>> GetAsync(int? assignedByAccountId = null, TaskStatus? status = null)
+		public async Task<ListedResponse<TaskModel>> GetAsync(
+			int? assignedByAccountId = null,
+			TaskStatuses? status = null)
 		{
 			return await GetHttpResponseAsync<ListedResponse<TaskModel>>(
 				HttpMethod.Get,
