@@ -53,6 +53,9 @@ namespace CSharp.Chatwork.Internal
 				case Enum _:
 					return StringUtil.ToEmpty(obj);
 
+				case Array a:
+					return string.Join(",", a);
+
 				default:
 					throw new NotSupportedException();
 			}

@@ -9,8 +9,8 @@ namespace CSharp.Chatwork.Endpoint
 {
 	public abstract class Endpoint
 	{
-		private const string BASE_URI = "https://api.chatwork.com/v2/";
-		private static readonly HttpClient _httpClient = new HttpClient();
+		protected const string BASE_URI = "https://api.chatwork.com/v2/";
+		protected static readonly HttpClient _httpClient = new HttpClient();
 
 		protected Endpoint(ChatworkToken token)
 		{

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CSharp.Chatwork.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -22,9 +23,9 @@ namespace CSharp.Chatwork
 			this.InnerList = new List<T>();
 		}
 
-		public ListedResponse(List<T> collection)
+		public ListedResponse(IEnumerable<T> collection)
 		{
-			this.InnerList = collection;
+			this.InnerList = collection.ToList();
 		}
 
 		public IEnumerator<T> GetEnumerator()
@@ -128,6 +129,26 @@ namespace CSharp.Chatwork
 		public string LoginMail { get; set; }
 	}
 
+	public class MessageModel : Response
+	{
+		[JsonProperty("message_id")]
+		public string MessageId { get; set; }
+
+		[JsonProperty("account")]
+		public AccountModel Account { get; set; }
+
+		[JsonProperty("body")]
+		public string Body { get; set; }
+
+		[JsonProperty("send_time")]
+		[JsonConverter(typeof(DateTimeConverter))]
+		public DateTime SendTime { get; set; }
+
+		[JsonProperty("update_time")]
+		[JsonConverter(typeof(DateTimeConverter))]
+		public DateTime UpdateTime { get; set; }
+	}
+
 	public class RoomModel : Response
 	{
 		[JsonProperty("room_id")]
@@ -138,11 +159,11 @@ namespace CSharp.Chatwork
 
 		[JsonProperty("type")]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public RoomType Type { get; set; }
+		public RoomTypes Type { get; set; }
 
 		[JsonProperty("role")]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public RoomRole Role { get; set; }
+		public RoomRoles Role { get; set; }
 
 		[JsonProperty("sticky")]
 		public bool Sticky { get; set; }
@@ -199,11 +220,48 @@ namespace CSharp.Chatwork
 
 		[JsonProperty("status")]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public TaskStatus Status { get; set; }
+		public TaskStatuses Status { get; set; }
 
 		[JsonProperty("limit_type")]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public TaskLimitType LimitType { get; set; }
+		public TaskLimitTypes LimitType { get; set; }
+	}
+
+	public class FileModel : Response
+	{
+		[JsonProperty("file_id")]
+		public long FileId { get; set; }
+
+		[JsonProperty("account")]
+		public AccountModel Account { get; set; }
+
+		[JsonProperty("message_id")]
+		public string MessageId { get; set; }
+
+		[JsonProperty("filename")]
+		public string FileName { get; set; }
+
+		[JsonProperty("filesize")]
+		public long FileSize { get; set; }
+
+		[JsonProperty("upload_time")]
+		[JsonConverter(typeof(DateTimeConverter))]
+		public DateTime UploadTime { get; set; }
+	}
+
+	public class LinkModel : Response
+	{
+		[JsonProperty("public")]
+		public bool Public { get; set; }
+
+		[JsonProperty("url")]
+		public string Url { get; set; }
+
+		[JsonProperty("need_acceptance")]
+		public bool NeedAcceptance { get; set; }
+
+		[JsonProperty("description")]
+		public string Description { get; set; }
 	}
 
 	public class MyStatusModel : Response
@@ -227,6 +285,43 @@ namespace CSharp.Chatwork
 		public int MyTaskNum { get; set; }
 	}
 
+	public class RoomMemberIdsModel
+	{
+		[JsonProperty("admin")]
+		public long[] Admin { get; set; }
+
+		[JsonProperty("member")]
+		public long[] Member { get; set; }
+
+		[JsonProperty("readonly")]
+		public long[] Readonly { get; set; }
+	}
+
+	public class RoomReadStatusModel
+	{
+		[JsonProperty("unread_num")]
+		public int UnreadNum { get; set; }
+
+		[JsonProperty("mention_num")]
+		public int MentionNum { get; set; }
+	}
+
+	public class CreatedTaskIdsModel : Response, IEnumerable<long>
+	{
+		public IEnumerator<long> GetEnumerator()
+		{
+			return this.TaskIds.AsEnumerable()?.GetEnumerator() ?? throw new InvalidOperationException();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		[JsonProperty("task_ids")]
+		public long[] TaskIds { get; set; }
+	}
+
 	internal class ApiErrorModel : Response
 	{
 		public static explicit operator string[](ApiErrorModel model)
@@ -238,29 +333,56 @@ namespace CSharp.Chatwork
 		public string[] Errors { get; set; }
 	}
 
-	public enum TaskStatus
+	public enum TaskStatuses
 	{
 		Open,
 		Done
 	}
 
-	public enum TaskLimitType
+	public enum TaskLimitTypes
 	{
 		Date,
 		Time
 	}
 
-	public enum RoomType
+	public enum RoomTypes
 	{
 		My,
 		Direct,
 		Group
 	}
 
-	public enum RoomRole
+	public enum RoomRoles
 	{
 		ReadOnly = 0,
 		Member = 1,
 		Admin = 2
+	}
+
+	public enum RoomIconPresets
+	{
+		Group,
+		Check,
+		Document,
+		Meeting,
+		Event,
+		Project,
+		Business,
+		Study,
+		Security,
+		Star,
+		Idea,
+		Heart,
+		Magcup,
+		Beer,
+		Music,
+		Sports,
+		Travel
+	}
+
+	public enum RoomDeleteActionTypes
+	{
+		Leave,
+		Delete,
 	}
 }
