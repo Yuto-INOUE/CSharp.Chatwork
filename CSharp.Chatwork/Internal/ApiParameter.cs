@@ -2,12 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace CSharp.Chatwork.Internal
 {
 	internal class ApiParameter : IReadOnlyList<KeyValuePair<string, object>>
 	{
+		public ApiParameter()
+		{
+		}
+
+		public ApiParameter(Expression<Func<string, object>>[] expressions)
+		{
+			this.InternalList = ExpressionUtils.ExpressionToDictionary(expressions).ToList();
+		}
+
 		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
 		{
 			return this.InternalList.GetEnumerator();
@@ -23,7 +33,16 @@ namespace CSharp.Chatwork.Internal
 
 		public string ToQuery()
 		{
-			return this.Where(kvp => !string.IsNullOrEmpty(ConvertValue(kvp.Value))).Select(kvp => $"{kvp.Key.ToLowerSnakeCase()}={UrlEncode(ConvertValue(kvp.Value))}").JoinToString("&");
+			return this
+				.Select(
+					kvp => new 
+					{
+						Key = kvp.Key.ToLowerSnakeCase(),
+						EncodedValue = UrlEncode(ConvertValue(kvp.Value)),
+					})
+				.Where(kv => !string.IsNullOrEmpty(kv.EncodedValue))
+				.Select(kv => $"{kv.Key}={kv.EncodedValue}")
+				.JoinToString("&");
 		}
 
 		public void Add(string key, object obj)
