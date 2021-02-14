@@ -61,7 +61,7 @@ namespace CSharp.Chatwork.Properties {
         }
         
         /// <summary>
-        ///   The Chatwoek API reuturned an error. に類似しているローカライズされた文字列を検索します。
+        ///   The Chatwork API reuturned an error. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ExceptionApiError {
             get {
