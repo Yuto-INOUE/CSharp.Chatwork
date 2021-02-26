@@ -34,6 +34,10 @@ namespace CSharp.Chatwork.Endpoint
 				{
 					{ new StreamContent(stream), "file", Path.GetFileName(file) },
 					{ new StringContent(message, Encoding.UTF8), "message" }
+				},
+				Headers =
+				{
+					{ "X-ChatWorkToken", this.Token.ApiKey }
 				}
 			};
 
